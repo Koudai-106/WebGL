@@ -6,7 +6,7 @@
     <script src="https://unpkg.com/three@0.137.4/examples/js/controls/OrbitControls.js"></script>
   </head>
 <body>
-<h1>を作成</h1>
+<h1>ビルボード</h1>
 <script>
     // ページの読み込みを待つ
     window.addEventListener('DOMContentLoaded', init);
@@ -21,7 +21,7 @@
       document.body.appendChild(renderer.domElement);
       renderer.setSize(width, height);
       // 背景の色を設定
-      renderer.setClearColor(0x8AC1F4);
+      renderer.setClearColor(0xCFE2F3);
 
 
       // シーンを作成
@@ -55,11 +55,11 @@
       // ペンギンをスプライトで作成
       var textureLoader = new THREE.TextureLoader();  
       var texture = textureLoader.load("img/penguin.png");
-      const material = new PENGUIN.SpriteMaterial({ map: texture,});
+      const material = new THREE.SpriteMaterial({ map: texture,});
 
       // 群れを作成
       for (let i = 0; i < 20; i++) {
-        const sprite = new PENGUIN.Sprite(material);
+        const sprite = new THREE.Sprite(material);
         // ランダムな座標に配置
         sprite.position.x = 2 * (Math.random() - 0.5);
         sprite.position.y = 0.5 * Math.random();
