@@ -47,6 +47,16 @@
       // シーンに追加
       scene.add(directionalLight2);
 
+      // 平面を作成
+      var planeGeometry = new THREE.PlaneGeometry(50,50);
+        //var planeMaterial = new THREE.MeshBasicMaterial({color: 0x00ff00});
+        var planeMaterial = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+        var plane = new THREE.Mesh(planeGeometry,planeMaterial);
+        plane.receiveShadow = true; //影がつく
+        plane.rotation.set( -Math.PI/2, 0, 0 );
+        plane.position.set(0,-3.0,-2);
+        scene.add(plane);
+
       // helper
       /*
       const gridHelper = new THREE.GridHelper(2,10); // size, step
