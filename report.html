@@ -73,9 +73,11 @@
       scene.add( cylinder );
 
       //球
-      var sphereGeometry = new THREE.SphereGeometry( 1.0, 32, 32 ); 
-      var sphereMaterial = new THREE. MeshStandardMaterial( {color: 0xffffff } );
-      var sphere = new THREE.Mesh( sphereGeometry, sphereMaterial );
+      const group = new THREE.group();
+      scene.add(group);
+      const sphereGeometry = new THREE.SphereGeometry( 1.0, 32, 32 ); 
+      const sphereMaterial = new THREE. MeshStandardMaterial( {color: 0xffffff } );
+      const sphere = new THREE.Mesh( sphereGeometry, sphereMaterial );
 
       // helper
       /*
@@ -136,14 +138,17 @@
       }
       
       for (let i = 0; i < 10; i++) {
-        var sphere = new THREE.Sphere(sphere);
+        const sphere = new THREE.Mesh( sphereGeometry, sphereMaterial );
 
-        // ランダムな座標に配置
-        sphere.position.x = 2 * (Math.random() - 0.2);
-        sphere.position.z = 2 * (Math.random() - 0.2);
-        // スケールを調整
-        sphere.scale.set(0.2, 0.2, 0.2);
-
+        mesh.position.x = (Math.random() - 0.5) * 2000;
+        mesh.position.y = (Math.random() - 0.5) * 2000;
+        mesh.position.z = (Math.random() - 0.5) * 2000;
+        mesh.rotation.x = Math.random() * 2 * Math.PI;
+        mesh.rotation.y = Math.random() * 2 * Math.PI;
+        mesh.rotation.z = Math.random() * 2 * Math.PI;
+        // グループに格納する
+        group.add(mesh);
+        
         scene.add(sphere);
       }
       
