@@ -72,6 +72,12 @@
       cylinder.position.set( -10, 0, 0 );
       scene.add( cylinder );
 
+      //球
+      var sphereGeometry = new THREE.SphereGeometry( 1.0, 32, 32 ); 
+      var sphereMaterial = new THREE. MeshStandardMaterial( {color: 0xffffff } );
+      var sphere = new THREE.Mesh( sphereGeometry, sphereMaterial );
+      scene.add( sphere );
+
       // helper
       /*
       const gridHelper = new THREE.GridHelper(2,10); // size, step
@@ -130,6 +136,19 @@
         scene.add(sprite3);
       }
       
+      for (let i = 0; i < 10; i++) {
+        const sphere = new THREE.Sprite(sphere);
+
+        // ランダムな座標に配置
+        sphere.position.x = 2 * (Math.random() - 0.2);
+        sphere.position.z = 2 * (Math.random() - 0.2);
+        // スケールを調整
+        sphere.scale.set(0.2, 0.2, 0.2);
+
+        scene.add(sphere);
+      }
+      
+
       update();
 
       // 毎フレーム時に実行されるループイベントです
