@@ -80,7 +80,6 @@
       scene.add(group);
       const sphereGeometry = new THREE.SphereGeometry( 0.01, 32, 32 ); 
       const sphereMaterial = new THREE. MeshStandardMaterial( {color: 0xffffff } );
-      const sphere = new THREE.Mesh( sphereGeometry, sphereMaterial );
 
       // helper
       /*
@@ -154,21 +153,16 @@
         
         scene.add(sphere);
       }
-      
-      // 毎フレーム時に実行されるループイベントです
-      tick();
-
-      function tick() {
-      // グループを回す
-      group.rotateY(0.01);
-      renderer.render(scene, camera); // レンダリング
-      requestAnimationFrame(tick);
-      }
 
       update();
 
       // 毎フレーム時に実行されるループイベントです
       function update() {
+
+        // グループを回す
+        group.rotateY(0.01);
+        renderer.render(scene, camera); // レンダリング
+        requestAnimationFrame(update);
 
         // レンダリング
         renderer.render(scene, camera);
