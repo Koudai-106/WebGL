@@ -66,10 +66,10 @@
       scene.add( Octahedron );
 
       //円柱
-      var cylinderGeometry = new THREE.CylinderGeometry( 2.0, 8.0, 2, 10 );
+      var cylinderGeometry = new THREE.CylinderGeometry( 2.0, 8.0, 4, 10 );
       var cylinderMaterial = new THREE.MeshStandardMaterial( {color: 0Xffffff} );
       var cylinder = new THREE.Mesh( cylinderGeometry, cylinderMaterial );
-      cylinder.position.set( -1, 0, 0 );
+      cylinder.position.set( -10, 0, 0 );
       scene.add( cylinder );
 
       // helper
