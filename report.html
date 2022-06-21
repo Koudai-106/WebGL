@@ -48,19 +48,21 @@
       scene.add(directionalLight2);
 
       // 平面を作成
+      /*
       var planeGeometry = new THREE.PlaneGeometry(40,40);
-        var planeMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
-        var plane = new THREE.Mesh(planeGeometry,planeMaterial);
-        plane.receiveShadow = true; //影がつく
-        plane.rotation.set( -Math.PI/2, 0, 0 );
-        plane.position.set(0,-3.0,-2);
-        scene.add(plane);
-      
-      var OctahedronGeometry = new THREE.OctahedronGeometry(1, 0);
-        var OctahedronMaterial = new THREE.MeshStandardMaterial( {color: 0Xffffff} );
-        var Octahedron = new THREE.Mesh( OctahedronGeometry, OctahedronMaterial );
-        Octahedron.position.set( 5, 0, 0);
-        scene.add( Octahedron );
+      var planeMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
+      var plane = new THREE.Mesh(planeGeometry,planeMaterial);
+      plane.receiveShadow = true; //影がつく
+      plane.rotation.set( -Math.PI/2, 0, 0 );
+      plane.position.set(0,-3.0,-2);
+      scene.add(plane);
+      */
+
+      var OctahedronGeometry = new THREE.OctahedronGeometry(8, 0);
+      var OctahedronMaterial = new THREE.MeshStandardMaterial( {color: 0Xffffff} );
+      var Octahedron = new THREE.Mesh( OctahedronGeometry, OctahedronMaterial );
+      Octahedron.position.set( 5, 0, 0 );
+      scene.add( Octahedron );
 
       // helper
       /*
