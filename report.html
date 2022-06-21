@@ -58,9 +58,9 @@
       scene.add(plane);
       */
 
-      var OctahedronGeometry = new THREE.OctahedronGeometry(2, 0);
+      var OctahedronGeometry = new THREE.OctahedronGeometry(2, 5);
       var OctahedronMaterial = new THREE.MeshStandardMaterial( {color: 0Xffffff} );
-      
+      var Octahedron = new THREE.Mesh( OctahedronGeometry, OctahedronMaterial );
       Octahedron.position.set( 5, 0, 0 );
       scene.add( Octahedron );
 
