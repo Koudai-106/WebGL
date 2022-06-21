@@ -136,7 +136,7 @@
       }
       
       for (let i = 0; i < 10; i++) {
-        const sphere = new THREE.Sprite(sphere);
+        const sphere = new THREE.Sphere(sphere);
 
         // ランダムな座標に配置
         sphere.position.x = 2 * (Math.random() - 0.2);
@@ -152,9 +152,6 @@
 
       // 毎フレーム時に実行されるループイベントです
       function update() {
-
-        texture3.rotation.x += 0.01;
-        texture3.rotation.y += 0.01;
 
         // レンダリング
         renderer.render(scene, camera);
