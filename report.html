@@ -58,11 +58,19 @@
       scene.add(plane);
       */
 
+      //八面体
       var OctahedronGeometry = new THREE.OctahedronGeometry(0.5, 1);
       var OctahedronMaterial = new THREE.MeshStandardMaterial( {color: 0Xffffff} );
       var Octahedron = new THREE.Mesh( OctahedronGeometry, OctahedronMaterial );
       Octahedron.position.set( 1, 0, 0 );
       scene.add( Octahedron );
+
+      //円柱
+      var cylinderGeometry = new THREE.CylinderGeometry( 2.0, 8.0, 2, 10 );
+      var cylinderMaterial = new THREE.MeshStandardMaterial( {color: 0Xffffff} );
+      var cylinder = new THREE.Mesh( cylinderGeometry, cylinderMaterial );
+      cylinder.position.set( -1, 0, 0 );
+      scene.add( cylinder );
 
       // helper
       /*
