@@ -28,6 +28,9 @@
       // シーンを作成
       const scene = new THREE.Scene();
 
+      // フォグを設定
+      scene.fog = new THREE.Fog(0x000000, 50, 2000);
+
       // カメラを作成
       const camera = new THREE.PerspectiveCamera(20, width / height);
       // カメラの初期座標を設定
@@ -73,9 +76,9 @@
       scene.add( cylinder );
 
       //球
-      const group = new THREE.group();
+      const group = new THREE.Group();
       scene.add(group);
-      const sphereGeometry = new THREE.SphereGeometry( 1.0, 32, 32 ); 
+      const sphereGeometry = new THREE.SphereGeometry( 0.01, 32, 32 ); 
       const sphereMaterial = new THREE. MeshStandardMaterial( {color: 0xffffff } );
       const sphere = new THREE.Mesh( sphereGeometry, sphereMaterial );
 
@@ -137,8 +140,8 @@
         scene.add(sprite3);
       }
       
-      for (let i = 0; i < 10; i++) {
-        const sphere = new THREE.Mesh( sphereGeometry, sphereMaterial );
+      for (let i = 0; i < 100; i++) {
+        const mesh = new THREE.Mesh( sphereGeometry, sphereMaterial );
 
         mesh.position.x = (Math.random() - 0.5) * 2000;
         mesh.position.y = (Math.random() - 0.5) * 2000;
@@ -152,6 +155,15 @@
         scene.add(sphere);
       }
       
+      // 毎フレーム時に実行されるループイベントです
+      tick();
+
+      function tick() {
+      // グループを回す
+      group.rotateY(0.01);
+      renderer.render(scene, camera); // レンダリング
+      requestAnimationFrame(tick);
+      }
 
       update();
 
