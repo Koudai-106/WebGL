@@ -7,7 +7,7 @@
   </head>
 <body>
 <h1>まとめ</h1>
-南極大陸風<br>
+<br>
 <script>
     // ページの読み込みを待つ
     window.addEventListener('DOMContentLoaded', init);
@@ -118,6 +118,10 @@
 
       // 毎フレーム時に実行されるループイベントです
       function update() {
+
+        material3.rotation.x += 0.01;
+        material3.rotation.y += 0.01;
+
         // レンダリング
         renderer.render(scene, camera);
         requestAnimationFrame(update);
