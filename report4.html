@@ -6,6 +6,9 @@
     <script src="https://unpkg.com/three@0.137.4/examples/js/controls/OrbitControls.js"></script>
   </head>
 <body>
+  <h1>テクスチャマッピング</h1>
+  document.write("<p>左：箱を生成し、６面分のテクスチャマッピングを行った</p>");
+  document.write("<p>右：箱を生成し、バンプマップを行った</p>");
  <script>
       <h1>テクスチャマッピング</h1>
       document.write("<p>左：箱を生成し、６面分のテクスチャマッピングを行った</p>");
@@ -71,7 +74,7 @@
         box1.position.set(-1.5,0,0); //位置を指定
         scene.add(box1);
 
-        
+
         // テクスチャー読み込み
         var textureLoader = new THREE.TextureLoader();  
         var texture = textureLoader.load("img/stone.jpg");
