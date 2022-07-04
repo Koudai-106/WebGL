@@ -1,173 +1,277 @@
-<html>
-  <head>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
     <meta charset="utf-8" />
     <title>report</title>
     <script src="https://unpkg.com/three@0.137.4/build/three.min.js"></script>
     <script src="https://unpkg.com/three@0.137.4/examples/js/controls/OrbitControls.js"></script>
-  </head>
+</head>
 <body>
-<h1>まとめ</h1>
-<br>
-<script>
+  <h1>まとめ</h1>
+  マウスによる画面操作・背景色の設定・平面にテクスチャを貼り付けて作成・影つけの実現<br>
+  ジョブズ氏をスプライトで作成し、ビルボードを実現<br>
+  箱を４つ作成し、６面分のテクスチャマッピングを行い、iPhoneとしてグループ化させて回転させた<br>
+  箱を４つ作成し、テクスチャを貼り付け、アプリケーションとしてグループ化させて回転させた<br>
+  <br>
+ <script>
     // ページの読み込みを待つ
     window.addEventListener('DOMContentLoaded', init);
 
     function init() {
-      // サイズを指定
-      const width = 800
-      const height = 600;
+        // サイズを指定
+        const width = 800
+        const height = 600;
 
-      // レンダラーを作成
-      var renderer = new THREE.WebGLRenderer();
-      document.body.appendChild(renderer.domElement);
-      renderer.setSize(width, height);
-      // 背景の色を設定
-      renderer.setClearColor(0xCFE2F3);
+        // レンダラーを作成
+        var renderer = new THREE.WebGLRenderer();
+        document.body.appendChild(renderer.domElement);
+        renderer.setSize(width, height);
+        // レンダラー：シャドウを有効にする
+        renderer.shadowMap.enabled = true;
 
+        // 背景の色を設定
+        renderer.setClearColor(0x708090);
 
-      // シーンを作成
-      const scene = new THREE.Scene();
+        // シーンを作成
+        const scene = new THREE.Scene();
 
-      // フォグを設定
-      scene.fog = new THREE.Fog(0x000000, 50, 2000);
+        // カメラを作成
+        const camera = new THREE.PerspectiveCamera(120, width / height);
+        // カメラの初期座標を設定
+        camera.position.set(0, 15, 20);
 
-      // カメラを作成
-      const camera = new THREE.PerspectiveCamera(20, width / height);
-      // カメラの初期座標を設定
-      camera.position.set(5, 3, 5);
-
-      // カメラコントローラーを作成
-      const controls = new THREE.OrbitControls(camera, document.body); 
-      
-      // 平行光源1
-      var directionalLight1 = new THREE.DirectionalLight(0xffffff);
-      directionalLight1.position.set(10, 10, 10);
-      // シーンに追加
-      scene.add(directionalLight1);
-      // 平行光源2
-      var directionalLight2 = new THREE.DirectionalLight(0xffffff);
-      directionalLight2.position.set(-10, -10, 10);
-      // シーンに追加
-      scene.add(directionalLight2);
-
-      // 平面を作成
-      /*
-      var planeGeometry = new THREE.PlaneGeometry(40,40);
-      var planeMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
-      var plane = new THREE.Mesh(planeGeometry,planeMaterial);
-      plane.receiveShadow = true; //影がつく
-      plane.rotation.set( -Math.PI/2, 0, 0 );
-      plane.position.set(0,-3.0,-2);
-      scene.add(plane);
-      */
-
-      //八面体
-      var OctahedronGeometry = new THREE.OctahedronGeometry(0.5, 1);
-      var OctahedronMaterial = new THREE.MeshStandardMaterial( {color: 0Xffffff} );
-      var Octahedron = new THREE.Mesh( OctahedronGeometry, OctahedronMaterial );
-      Octahedron.position.set( 1, 0, 0 );
-      scene.add( Octahedron );
-
-      //円柱
-      var cylinderGeometry = new THREE.CylinderGeometry( 1, 10, 4, 10 );
-      var cylinderMaterial = new THREE.MeshStandardMaterial( {color: 0Xffffff} );
-      var cylinder = new THREE.Mesh( cylinderGeometry, cylinderMaterial );
-      cylinder.position.set( -10, 0, 0 );
-      scene.add( cylinder );
-
-      //球
-      const group = new THREE.Group();
-      scene.add(group);
-      const sphereGeometry = new THREE.SphereGeometry( 0.01, 32, 32 ); 
-      const sphereMaterial = new THREE. MeshStandardMaterial( {color: 0xffffff } );
-
-      // helper
-      /*
-      const gridHelper = new THREE.GridHelper(2,10); // size, step
-      scene.add(gridHelper);
-      const axisHelper = new THREE.AxisHelper(2); //軸の長さ　X：赤、Y：緑、z：青
-      scene.add(axisHelper);
-      */
-
-      // ペンギン1をスプライトで作成
-      var textureLoader = new THREE.TextureLoader();  
-      var texture1 = textureLoader.load("img/penguin1.png");
-      const material1 = new THREE.SpriteMaterial({ map: texture1,});
-
-      // ペンギン2をスプライトで作成
-      var textureLoader = new THREE.TextureLoader();  
-      var texture2 = textureLoader.load("img/penguin2.png");
-      const material2 = new THREE.SpriteMaterial({ map: texture2,});
-
-      // アザラシをスプライトで作成
-      var textureLoader = new THREE.TextureLoader();  
-      var texture3 = textureLoader.load("img/azarasi.png");
-      const material3 = new THREE.SpriteMaterial({ map: texture3,});
-
-      // 群れを作成
-      for (let i = 0; i < 30; i++) {
-        const sprite1 = new THREE.Sprite(material1);
-
-        // ランダムな座標に配置
-        sprite1.position.x = 2 * (Math.random() - 0.5);
-        sprite1.position.z = 2 * (Math.random() - 0.5);
-        // スケールを調整
-        sprite1.scale.set(0.5, 0.5, 0.5);
-
-        scene.add(sprite1);
-      }
-      for (let i = 0; i < 20; i++) {
-        const sprite2 = new THREE.Sprite(material2);
-
-        // ランダムな座標に配置
-        sprite2.position.x = 2 * (Math.random() - 0.3);
-        sprite2.position.z = 2 * (Math.random() - 0.3);
-        // スケールを調整
-        sprite2.scale.set(0.3, 0.3, 0.3);
-
-        scene.add(sprite2);
-      }
-      for (let i = 0; i < 10; i++) {
-        const sprite3 = new THREE.Sprite(material3);
-
-        // ランダムな座標に配置
-        sprite3.position.x = 2 * (Math.random() - 0.2);
-        sprite3.position.z = 2 * (Math.random() - 0.2);
-        // スケールを調整
-        sprite3.scale.set(0.2, 0.2, 0.2);
-
-        scene.add(sprite3);
-      }
-      
-      for (let i = 0; i < 100; i++) {
-        const mesh = new THREE.Mesh( sphereGeometry, sphereMaterial );
-
-        mesh.position.x = (Math.random() - 0.5) * 2000;
-        mesh.position.y = (Math.random() - 0.5) * 2000;
-        mesh.position.z = (Math.random() - 0.5) * 2000;
-        mesh.rotation.x = Math.random() * 2 * Math.PI;
-        mesh.rotation.y = Math.random() * 2 * Math.PI;
-        mesh.rotation.z = Math.random() * 2 * Math.PI;
-        // グループに格納する
-        group.add(mesh);
+        // カメラコントローラーを作成
+        const controls = new THREE.OrbitControls(camera, document.body); 
         
-        scene.add(sphere);
-      }
+        // 平行光源1
+        var directionalLight1 = new THREE.DirectionalLight(0xffffff);
+        directionalLight1.position.set(10, 10, 10);
+        directionalLight1.castShadow = true;
+        // シーンに追加
+        scene.add(directionalLight1);
+        // 平行光源2
+        var directionalLight2 = new THREE.DirectionalLight(0xffffff);
+        directionalLight2.position.set(-10, -10, 10);
+        directionalLight2.castShadow = true;
+        // シーンに追加
+        scene.add(directionalLight2);
 
-      update();
+        // helper
+        /*
+        const gridHelper = new THREE.GridHelper(2,10); // size, step
+        scene.add(gridHelper);
+        const axisHelper = new THREE.AxisHelper(2); //軸の長さ　X：赤、Y：緑、z：青
+        scene.add(axisHelper);
+        */
+
+        // 平面を作成
+        var planeGeometry = new THREE.PlaneGeometry(30,30);
+        var textureLoader = new THREE.TextureLoader();  
+        var texture = textureLoader.load("img/Apple.png");
+        var mat = new THREE.MeshStandardMaterial();
+        mat.map = texture;
+        var plane = new THREE.Mesh(planeGeometry,mat);
+        plane.receiveShadow = true; //影がつく
+        plane.rotation.set( -Math.PI/2, 0, 0 );
+        plane.position.set(0,-3.0,-2);
+        scene.add(plane);
+        
+        // ジョブズをスプライトで作成
+        var textureLoader = new THREE.TextureLoader();  
+        var texture = textureLoader.load("img/Jobs.png");
+        const material = new THREE.SpriteMaterial({ map: texture,});
+        const sprite = new THREE.Sprite(material);
+        sprite.position.set(0,5,0); 
+        sprite.scale.set(20, 20, 20);
+        scene.add(sprite);
+      
+
+        //blackのテクスチャー読み込み
+        var materials = [
+          new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture("img/iphone black.png")}),
+          new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture("img/iphone.png")}),
+          new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture("img/silver-gray.png")}),
+          new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture("img/iphone under.png")}),
+          new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture("img/silver-gray.png")}),
+          new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture("img/iphone left.png")}),
+        ];
+
+        var materials = new THREE.MeshFaceMaterial(materials); // マテリアルをセット
+
+        // black箱1を作成
+        var geometry = new THREE.BoxGeometry(0.5, 6, 3);
+        var box1 = new THREE.Mesh(geometry, materials);
+        box1.castShadow = true;
+        box1.position.set(8,0,0); //位置を指定
+
+
+        //redのテクスチャー読み込み
+        var materials = [
+          new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture("img/iphone.png")}),
+          new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture("img/iphone red.png")}),
+          new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture("img/iphone over red.png")}),
+          new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture("img/iphone under.png")}),
+          new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture("img/iphone left red.png")}),
+          new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture("img/iphone over red.png")}),
+        ];
+
+        var materials = new THREE.MeshFaceMaterial(materials); // マテリアルをセット
+        
+        // red箱2を作成
+        var geometry = new THREE.BoxGeometry(0.5, 6, 3);
+        var box2 = new THREE.Mesh(geometry, materials);
+        box2.castShadow = true;
+        box2.position.set(-8,0,0); //位置を指定
+        
+
+        //greenのテクスチャー読み込み
+        var materials = [
+          new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture("img/iphone green.png")}),
+          new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture("img/iphone.png")}),
+          new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture("img/iphone over green.png")}),
+          new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture("img/iphone under.png")}),
+          new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture("img/iphone over green.png")}),
+          new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture("img/iphone left green.png")}),
+        ];
+
+        var materials = new THREE.MeshFaceMaterial(materials); // マテリアルをセット
+
+        // green箱3を作成
+        var geometry = new THREE.BoxGeometry(0.5, 6, 3);
+        var box3 = new THREE.Mesh(geometry, materials);
+        box3.castShadow = true;
+        box3.position.set(0,0,8); //位置を指定
+        box3.rotation.y = 4.7;
+        
+
+        //blueのテクスチャー読み込み
+        var materials = [
+          new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture("img/iphone.png")}),
+          new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture("img/iphone blue.png")}),
+          new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture("img/iphone over blue.png")}),
+          new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture("img/iphone under.png")}),
+          new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture("img/iphone left blue.png")}),
+          new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture("img/iphone over blue.png")}),
+        ];
+
+        var materials = new THREE.MeshFaceMaterial(materials); // マテリアルをセット
+
+        // blue箱4を作成
+        var geometry = new THREE.BoxGeometry(0.5, 6, 3);
+        var box4 = new THREE.Mesh(geometry, materials);
+        box4.castShadow = true;
+        box4.position.set(0,0,-8); //位置を指定
+        box4.rotation.y = 4.7;
+
+
+        // LINE読み込み
+        var textureLoader = new THREE.TextureLoader();  
+        var texture = textureLoader.load("img/LINE.png");
+        var mat = new THREE.MeshStandardMaterial({transparent:true});
+        mat.map = texture;
+
+        // LINEを作成
+        var geometry = new THREE.BoxGeometry(5, 5, 5);
+        var box5 = new THREE.Mesh(geometry, mat);
+        box5.castShadow = true;
+        box5.position.set(0,8,-20); //位置を指定
+        //scene.add(box5);
+
+
+        // Twitter読み込み
+        var textureLoader = new THREE.TextureLoader();  
+        var texture = textureLoader.load("img/twitter.png");
+        var mat = new THREE.MeshStandardMaterial({transparent:true});
+        mat.map = texture;
+
+        // Twitterを作成
+        var geometry = new THREE.BoxGeometry(5, 5, 5);
+        var box6 = new THREE.Mesh(geometry, mat);
+        box6.castShadow = true;
+        box6.position.set(0,8,20); //位置を指定
+        //scene.add(box6);
+
+
+        // YouTube読み込み
+        var textureLoader = new THREE.TextureLoader();  
+        var texture = textureLoader.load("img/YouTube.png");
+        var mat = new THREE.MeshStandardMaterial({transparent:true});
+        mat.map = texture;
+
+        // YouTubeを作成
+        var geometry = new THREE.BoxGeometry(5, 5, 5);
+        var box7 = new THREE.Mesh(geometry, mat);
+        box7.castShadow = true;
+        box7.position.set(20,8,0); //位置を指定
+        //scene.add(box7);
+
+
+        // Safari読み込み
+        var textureLoader = new THREE.TextureLoader();  
+        var texture = textureLoader.load("img/Safari.png");
+        var mat = new THREE.MeshStandardMaterial({transparent:true});
+        mat.map = texture;
+
+        // Safariを作成
+        var geometry = new THREE.BoxGeometry(5, 5, 5);
+        var box8 = new THREE.Mesh(geometry, mat);
+        box8.castShadow = true;
+        box8.position.set(-20,8,0); //位置を指定
+        //scene.add(box8);
+        
+
+        //iPhoneのオブジェクト
+        const iPhone = new THREE.Group();
+        iPhone.add(box1); // を追加
+        iPhone.add(box2); // を追加
+        iPhone.add(box3); // を追加
+        iPhone.add(box4); //
+        iPhone.position.set(0,0,0);//iPhoneグループの原点の位置
+        scene.add( iPhone );
+
+        //全体のオブジェクト
+        const all1 = new THREE.Group();
+        all1.add(plane);//平面を追加
+        all1.add(iPhone); // iPhoneを追加
+        all1.castShadow = true;
+        all1.position.set(0,0,0);//全体グループの原点の位置
+        scene.add(all1); 
+
+
+        //Applicationのオブジェクト
+        const Application = new THREE.Group();
+        Application.add(box5); 
+        Application.add(box6); 
+        Application.add(box7); 
+        Application.add(box8); 
+        Application.position.set(0,0,0);
+        scene.add( Application );
+
+        //全体のオブジェクト
+        const all2 = new THREE.Group();
+        all2.add(plane);//平面を追加
+        all2.add(iPhone); // iPhoneを追加
+        all2.castShadow = true;
+        all2.position.set(0,5,0);//全体グループの原点の位置
+        scene.add(all2); 
+
+        update();
 
       // 毎フレーム時に実行されるループイベントです
       function update() {
-
-        // グループを回す
-        group.rotateY(0.01);
-        renderer.render(scene, camera); // レンダリング
-        requestAnimationFrame(update);
-
         // レンダリング
         renderer.render(scene, camera);
         requestAnimationFrame(update);
+        
+        // iPhoneを回転させる
+        iPhone.rotation.y += -0.01;
+
+        // Applicationを回転させる
+        Application.rotation.x += 0.01;
+        Application.rotation.y += 0.01;
+
       }
     }
   </script>
 </body>
+</html>
